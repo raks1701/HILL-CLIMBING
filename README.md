@@ -59,3 +59,38 @@ Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 0  Solution :  Artificial Intelligence<br>
+
+##Program:
+```
+import random
+import string
+
+def fitness(candidate, target):
+    return sum(abs(ord(candidate[i]) - ord(target[i])) for i in range(len(target)))
+
+def mutate(parent):
+    idx = random.randrange(len(parent))
+    new_char = random.choice(string.printable[:95])
+    return parent[:idx] + new_char + parent[idx + 1:]
+
+def hill_climb(target):
+    current = ''.join(random.choice(string.printable[:95]) for _ in range(len(target)))
+    current_score = fitness(current, target)
+    while True:
+        neighbor = mutate(current)
+        neighbor_score = fitness(neighbor, target)
+        if neighbor_score <= current_score:
+            current, current_score = neighbor, neighbor_score
+            print(f"Score: {current_score} Solution : {current}")
+        if current_score == 0:
+            break
+    return current
+
+target_string = "Artificial Intelligence"
+solution = hill_climb(target_string)
+print("\nFinal Solution:", solution)
+
+```
+##Output##:
+<img width="481" height="775" alt="image" src="https://github.com/user-attachments/assets/5c309cae-04b4-4cc8-ab59-60f0d5c5f53a" />
+
